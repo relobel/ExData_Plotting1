@@ -1,6 +1,6 @@
 # setwd("D:/git_repo/ExData_Plotting1")
 
-DataPlot <- function() {
+Load_Data <- function() {
 library(dplyr)
 library(lubridate)
 pwr <- tbl_df(read.table("D:/git_repo/household_power_consumption.txt",
@@ -14,5 +14,12 @@ pwr = mutate(pwr, active_pwr=as.numeric(active_pwr), react_pwr=as.numeric(react_
 pwr = mutate(pwr, Voltage=as.numeric(Voltage), Intensity=as.numeric(Intensity)) 
 pwr = mutate(pwr, Date= dmy(Date), Time=hms(Time))
 pwr = filter(pwr, Date >= dmy("1/2/2007") & Date <= dmy("2/2/2007"))
-pwr
+saveRDS(pwr, file="pwr.RDS")
+print("pwr.RDS saved on file")
 }
+
+DataPlot <- function(){
+pwr <- readRDS("pwr.RDS")
+summary(pwr)       
+}
+
